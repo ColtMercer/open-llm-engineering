@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+message: If this project supports your work, cite the repository and the primary sources linked by the relevant chapter.
+title: Open LLM Engineering
+type: software
+version: 0.1.0
+date-released: 2026-07-12
+authors:
+  - family-names: Mercer
+    given-names: Colt
+repository-code: https://github.com/ColtMercer/open-llm-engineering
+url: https://coltmercer.github.io/open-llm-engineering/
+license: MIT
+abstract: >-
+  A source-backed, executable beginner-to-expert guide to language-model data,
+  tokenization, Transformer and mixture-of-experts architecture, training,
+  post-training, inference, prompting, agents, evaluation, and reproducibility.
+keywords:
+  - large language models
+  - transformers
+  - mixture of experts
+  - open science
+  - machine learning education
+

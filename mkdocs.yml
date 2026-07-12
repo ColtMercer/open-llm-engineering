@@ -1,0 +1,169 @@
+site_name: Open LLM Engineering
+site_description: A source-backed, executable guide to modern language models
+site_author: Colt Mercer and contributors
+site_url: https://coltmercer.github.io/open-llm-engineering/
+repo_url: https://github.com/ColtMercer/open-llm-engineering
+repo_name: ColtMercer/open-llm-engineering
+edit_uri: edit/main/docs/
+copyright: Copyright &copy; 2026 Colt Mercer and contributors
+
+theme:
+  name: material
+  language: en
+  logo: assets/images/mark.svg
+  favicon: assets/images/mark.svg
+  features:
+    - navigation.instant
+    - navigation.instant.progress
+    - navigation.sections
+    - navigation.top
+    - navigation.footer
+    - content.code.copy
+    - content.code.annotate
+    - content.tabs.link
+    - search.highlight
+    - search.suggest
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: open-llm-light
+      primary: deep purple
+      accent: teal
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: deep purple
+      accent: teal
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+
+plugins:
+  - search
+  - minify:
+      minify_html: true
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+
+extra_css:
+  - assets/stylesheets/extra.css
+extra_javascript:
+  - assets/javascripts/mathjax.js
+  - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
+  - https://unpkg.com/mermaid@11/dist/mermaid.min.js
+  - assets/javascripts/mermaid.js
+
+nav:
+  - Home: index.md
+  - Start here:
+      - Orientation: start-here.md
+      - Learning paths: learning-paths.md
+      - How to read the math: 01-foundations/03-math-with-shapes.md
+      - Lab setup: labs/setup.md
+  - 1. Foundations:
+      - What an LLM is: 01-foundations/01-what-is-an-llm.md
+      - Learning from examples: 01-foundations/02-learning-from-data.md
+      - Math with shapes: 01-foundations/03-math-with-shapes.md
+      - PyTorch mental model: 01-foundations/04-pytorch-mental-model.md
+  - 2. Tokens:
+      - Text becomes tokens: 02-tokenization/01-text-becomes-tokens.md
+      - BPE by hand: 02-tokenization/02-bpe-by-hand.md
+      - Vocabulary trade-offs: 02-tokenization/03-vocabulary-tradeoffs.md
+      - Tokenizer engineering: 02-tokenization/04-tokenizer-engineering.md
+  - 3. Data:
+      - Data is the model: 03-data/01-data-is-the-model.md
+      - Open dataset atlas: 03-data/02-open-dataset-atlas.md
+      - Curation pipeline: 03-data/03-curation-pipeline.md
+      - Governance and licensing: 03-data/04-governance-licensing.md
+      - Build a small corpus: 03-data/05-build-a-small-corpus.md
+  - 4. Transformer:
+      - Mental model: 04-transformer/01-transformer-mental-model.md
+      - Embeddings and position: 04-transformer/02-embeddings-and-position.md
+      - Attention from scratch: 04-transformer/03-attention-from-scratch.md
+      - Transformer block: 04-transformer/04-the-transformer-block.md
+      - Modern variants: 04-transformer/05-modern-block-variants.md
+  - 5. Mixture of experts:
+      - Why sparse models: 05-moe/01-why-sparse-models.md
+      - Router math: 05-moe/02-router-math.md
+      - Capacity and balance: 05-moe/03-capacity-load-balancing.md
+      - Distributed experts: 05-moe/04-distributed-expert-parallelism.md
+      - Real architectures: 05-moe/05-real-architectures.md
+      - Prompting and experts: 05-moe/06-prompting-and-experts.md
+      - Build a tiny MoE: 05-moe/07-build-a-tiny-moe.md
+  - 6. Pretraining:
+      - Objective: 06-training/01-pretraining-objective.md
+      - Optimization and scaling: 06-training/02-optimization-and-scaling.md
+      - Distributed training: 06-training/03-distributed-training.md
+      - Evaluation and checkpoints: 06-training/04-evaluation-and-checkpoints.md
+  - 7. Post-training:
+      - Supervised tuning: 07-post-training/01-sft-and-instruction-tuning.md
+      - Preference optimization: 07-post-training/02-preference-optimization.md
+      - RLHF and verifiers: 07-post-training/03-rlhf-and-verifiers.md
+      - Reasoning models: 07-post-training/04-reasoning-models.md
+  - 8. Inference:
+      - Decoding: 08-inference/01-decoding.md
+      - KV cache and attention: 08-inference/02-kv-cache-and-attention.md
+      - Serving and batching: 08-inference/03-serving-and-batching.md
+      - Quantization and speculation: 08-inference/04-quantization-speculation.md
+  - 9. Prompting:
+      - Prompting as interface design: 09-prompting/01-prompting-as-interface.md
+      - Structured output and tools: 09-prompting/02-structured-and-tool-use.md
+      - Long context and RAG: 09-prompting/03-long-context-rag.md
+      - Reasoning and evaluation: 09-prompting/04-reasoning-and-evaluation.md
+  - 10. Agents:
+      - The agent loop: 10-agents/01-agent-loop.md
+      - Memory, planning, multi-agent: 10-agents/02-memory-planning-multi-agent.md
+      - Production safety: 10-agents/03-production-safety.md
+  - 11. End to end:
+      - The complete pipeline: 11-end-to-end/01-complete-pipeline.md
+      - Design a model: 11-end-to-end/02-design-a-model.md
+      - Plan data and compute: 11-end-to-end/03-plan-data-compute.md
+      - Train, evaluate, release: 11-end-to-end/04-train-evaluate-release.md
+      - Reproducibility blueprint: 11-end-to-end/05-reproducibility-blueprint.md
+  - Labs:
+      - Setup: labs/setup.md
+      - Tokenizer: labs/01-tokenizer.md
+      - Causal attention: labs/02-attention.md
+      - Tiny GPT: labs/03-tiny-gpt.md
+      - Tiny MoE: labs/04-tiny-moe.md
+      - Generation: labs/05-generation.md
+  - Reference:
+      - Dataset catalog: reference/datasets.md
+      - Open projects: reference/open-projects.md
+      - Source-code map: reference/code-map.md
+      - Paper trail: reference/papers.md
+      - Equation sheet: reference/equations.md
+      - Glossary: reference/glossary.md
+      - Myth detector: reference/myth-detector.md
+  - About:
+      - Research methodology: about/methodology.md
+      - Visual provenance: assets/images/README.md
+      - Roadmap: about/roadmap.md

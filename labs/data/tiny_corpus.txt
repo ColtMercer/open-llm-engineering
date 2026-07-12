@@ -1,0 +1,6 @@
+Language models learn a distribution over sequences.
+Tokens become vectors. Attention moves information. Feed-forward layers transform it.
+Training compares predictions with observed next tokens and updates parameters.
+Inference holds parameters fixed and generates one token at a time.
+Small experiments reveal contracts that giant systems can hide.
+

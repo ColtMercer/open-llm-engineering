@@ -1,0 +1,42 @@
+name: Content correction
+description: Report a factual, mathematical, code, or source problem
+title: "Correction: "
+labels: [content, correction]
+body:
+  - type: markdown
+    attributes:
+      value: Thank you for helping make the book more precise. Please use primary evidence where available.
+  - type: input
+    id: location
+    attributes:
+      label: Chapter and section
+      placeholder: docs/05-moe/02-router-math.md — Top-k routing
+    validations:
+      required: true
+  - type: textarea
+    id: current
+    attributes:
+      label: Current claim or behavior
+      description: Quote only the smallest passage needed to identify the issue.
+    validations:
+      required: true
+  - type: textarea
+    id: correction
+    attributes:
+      label: Proposed correction
+      description: Explain the precise replacement and its scope.
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: Primary source
+      placeholder: Paper, official documentation, source file, dataset card, or reproducible result URL
+    validations:
+      required: true
+  - type: textarea
+    id: version
+    attributes:
+      label: Version context
+      description: Model, dataset, code revision, date, units, or configuration needed to bound the claim.
+
