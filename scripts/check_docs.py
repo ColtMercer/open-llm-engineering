@@ -67,8 +67,32 @@ def main() -> int:
             errors.append(f"mkdocs nav target does not exist: {target.relative_to(ROOT)}")
 
     home = (DOCS / "index.md").read_text().lower()
-    if "[begin with lesson 0](01-foundations/00-before-the-jargon.md)" not in home:
-        errors.append("homepage must make lesson 0 the primary starting action")
+    introduction_action = "[read the introduction](start-here.md){ .md-button .md-button--primary }"
+    if introduction_action not in home:
+        errors.append("homepage must make the introduction the primary starting action")
+
+    introduction = (DOCS / "start-here.md").read_text().lower()
+    introduction_contract = (
+        "## the goal",
+        "## how each idea is taught",
+        "## models and public projects reviewed",
+        "## datasets reviewed",
+        "## labs and source walkthroughs",
+        "## scope and honest limitations",
+    )
+    for required_section in introduction_contract:
+        if required_section not in introduction:
+            errors.append(f"introduction is missing required section: {required_section}")
+
+    nav_text = (ROOT / "mkdocs.yml").read_text()
+    introduction_nav = "Introduction - Goal and scope: start-here.md"
+    lesson_zero_nav = "Lesson 0 - Before the jargon: 01-foundations/00-before-the-jargon.md"
+    if (
+        introduction_nav not in nav_text
+        or lesson_zero_nav not in nav_text
+        or nav_text.index(introduction_nav) > nav_text.index(lesson_zero_nav)
+    ):
+        errors.append("navigation must place the introduction before Lesson 0")
 
     for relative_path, banned_phrases in BEGINNER_GUARDRAILS.items():
         beginner_text = (DOCS / relative_path).read_text().lower()

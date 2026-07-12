@@ -48,7 +48,7 @@ For a fixed checkpoint, a system can spend more compute by:
 
 **Caution:** more compute can repeat the same mistake, increase latency, or give an unreliable judge more opportunities to select confidently wrong output. Measure the accuracy–cost curve.
 
-## One open training example: DeepSeek-R1
+## One publicly documented training example: DeepSeek-R1
 
 The [DeepSeek-R1 paper](https://arxiv.org/abs/2501.12948) and [official repository](https://github.com/deepseek-ai/DeepSeek-R1) describe:
 
@@ -162,4 +162,3 @@ Do not compare a one-sample baseline with an expensive multi-sample system witho
 - [Self-Consistency Improves Chain of Thought Reasoning](https://arxiv.org/abs/2203.11171)
 - [Let's Verify Step by Step](https://arxiv.org/abs/2305.20050)
 - [Measuring Faithfulness in Chain-of-Thought Reasoning](https://www.anthropic.com/research/measuring-faithfulness-in-chain-of-thought-reasoning)
-

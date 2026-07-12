@@ -9,6 +9,8 @@
 
 Most explanations of LLMs either stay at the analogy level or begin halfway up the technical ladder. This book starts with ordinary language, defines every concept before relying on it, and eventually connects each idea to the data record, equation, tensor shape, training loop, source file, and production trade-off behind it.
 
+New readers should begin with the [Introduction](docs/start-here.md), which states the course goal, learning outcomes, method, model and dataset coverage, labs, and boundaries before the first lesson.
+
 ```mermaid
 flowchart LR
     A[Show examples] --> B[Let the model predict]
@@ -29,8 +31,8 @@ flowchart LR
 
 ## Start here
 
-1. Read the [Start Here](docs/start-here.md) page.
-2. Complete [Lesson 0: Before the jargon](docs/01-foundations/00-before-the-jargon.md).
+1. Read the [Introduction](docs/start-here.md) to understand the goal, learning method, model coverage, dataset coverage, labs, and complete journey.
+2. Begin [Lesson 0: Before the jargon](docs/01-foundations/00-before-the-jargon.md).
 3. Follow the [canonical curriculum](docs/learning-paths.md#the-canonical-zero-to-expert-course).
 4. Set up the [labs](docs/labs/setup.md) when the course first calls for one.
 5. Use the [concept ladder](docs/reference/concept-ladder.md), [dataset atlas](docs/reference/datasets.md), and [source-code map](docs/reference/code-map.md) as references.
