@@ -1,83 +1,116 @@
-# Start here
+# Start here: your first five minutes
 
-You do not need calculus, a GPU cluster, or prior ML experience to begin. You do need to keep three ideas separate:
+This library assumes no prior study of artificial intelligence, programming, calculus, or statistics. If a chapter introduces a technical word, it must first explain the ordinary idea that the word names.
 
-1. **The training process** changes parameters by comparing predictions with examples.
-2. **The trained model** is a numerical function plus learned parameters.
-3. **The product** wraps that model with templates, retrieval, tools, policies, storage, and infrastructure.
+## The first idea
 
-Confusing these layers causes most bad explanations of LLM behavior.
+Try to complete this phrase:
 
-## Your first complete trace
+> Peanut butter and ___
 
-Suppose the text is:
+Many English speakers will think of `jelly`. That answer is not guaranteed, but it is a strong pattern in the language examples they have encountered.
 
-> Rain fell on the dry
+A computer can learn patterns from examples too. We call the learned program a **model**.
 
-A simplified tokenizer might produce `[4210, 981, 319, 279, 5421]`. During training, one input/target view is:
+- The text given to it is the **input**.
+- What it produces is the **output**.
+- A possible output chosen before the answer is known is a **prediction**.
+- Showing it examples and adjusting it when its predictions are poor is **training**.
 
-| Position | Context visible to the model | Target |
-|---:|---|---|
-| 0 | `Rain` | ` fell` |
-| 1 | `Rain fell` | ` on` |
-| 2 | `Rain fell on` | ` the` |
-| 3 | `Rain fell on the` | ` dry` |
+Those four ideas are enough to begin.
 
-All four predictions can be computed in parallel because a **causal mask** prevents each position from looking rightward. The model returns logits with shape `[batch, sequence, vocabulary]`. A softmax converts one logit vector to probabilities; cross-entropy penalizes the probability placed on the observed target. Backpropagation computes how each parameter contributed to that penalty, and the optimizer nudges the parameters.
+## One complete learning cycle
 
-```mermaid
-sequenceDiagram
-    participant Text as Raw text
-    participant Tok as Tokenizer
-    participant Net as Transformer
-    participant Loss as Cross-entropy
-    participant Update as Optimizer
-    Text->>Tok: "Rain fell on the dry"
-    Tok->>Net: token IDs and shifted targets
-    Net->>Loss: logits [B, T, V]
-    Loss-->>Net: scalar loss and gradients
-    Net->>Update: parameter gradients
-    Update-->>Net: updated parameters
+Imagine these examples:
+
+```text
+The dog chased the ball.
+Please open the door.
+Rain fell on the ground.
 ```
 
-At inference time there are no target tokens and no optimizer. The system selects a token from the final-position distribution, appends it, and runs again—usually reusing the **KV cache** so earlier attention keys and values do not need to be recomputed.
+During one kind of training, the program sees the beginning and tries to predict what comes next:
 
-## The four levels used in every chapter
+| Given to the program | Hidden answer |
+|---|---|
+| `The dog chased the` | `ball` |
+| `Please open the` | `door` |
+| `Rain fell on the` | `ground` |
 
-=== "Intuition"
+The program guesses, compares its guess with the hidden answer, and changes some of its internal numbers. It repeats that process across many examples.
 
-    A durable mental model and one concrete example.
+```mermaid
+flowchart LR
+    Start[Read part of an example] --> Predict[Predict what comes next]
+    Predict --> Check[Reveal and compare the answer]
+    Check --> Change[Change internal numbers a little]
+    Change --> Repeat[Try another example]
+    Repeat --> Start
+```
 
-=== "Mechanism"
+The technical name for an adjustable internal number is a **parameter**. A real language model can contain a very large number of parameters, but the learning idea remains the same.
 
-    Tensor shapes, equations, invariants, and a trace.
+## Training and using are different
 
-=== "Implementation"
+During **training**, the program changes its parameters as it studies examples.
 
-    Executable teaching code plus links to production source.
+After training, people can give it new input and ask for an output without changing those parameters. That second activity is called **inference**, which simply means “use the trained model to make a prediction.”
 
-=== "Limits"
+| Activity | Are the learned numbers changing? | Purpose |
+|---|:---:|---|
+| Training | Yes | Learn patterns from examples |
+| Inference | No | Use those patterns on new input |
 
-    What the explanation does not imply, common failure modes, and unresolved research questions.
+## Why text must become pieces
 
-## Before copying a recipe
+Computers operate on numbers. Before a language model can process text, another part of the system divides text into reusable pieces and gives each piece a number. A piece is called a **token**.
 
-Ask:
+For example, one tokenizer might split:
 
-- Is this a fact from a specific implementation, a result from an experiment, or a rule of thumb?
-- Which model, tokenizer, dataset version, hardware, and software revision does it describe?
-- Does “tokens” mean raw corpus tokens, retained training tokens, or tokens actually consumed after sampling?
-- Does “parameters” include inactive experts, embeddings, shared experts, and tied weights?
-- Does a benchmark measure the property the surrounding sentence claims?
-- Are the model, code, and data licenses compatible with the intended use?
+```text
+unbelievable → un + believ + able
+```
 
-## Suggested first session
+A **tokenizer** is the component that performs that conversion. Different tokenizers can choose different pieces. You will build a small one later; for now, remember only that a token is a numbered text piece, not necessarily a whole word.
 
-1. Read [What an LLM is](01-foundations/01-what-is-an-llm.md).
-2. Work through [Text becomes tokens](02-tokenization/01-text-becomes-tokens.md).
-3. Run the [tokenizer lab](labs/01-tokenizer.md).
-4. Read the [Transformer mental model](04-transformer/01-transformer-mental-model.md).
-5. Return to the [complete pipeline](11-end-to-end/01-complete-pipeline.md) whenever you lose the big picture.
+## Six words to take with you
 
-!!! tip "Read equations as programs"
-    Name every input, write its shape, follow one index, and check the output shape. The [math chapter](01-foundations/03-math-with-shapes.md) teaches this method without assuming advanced mathematics.
+| Word | Meaning in this course |
+|---|---|
+| Model | A program whose behavior was shaped by examples |
+| Input | What goes into the program |
+| Output | What comes out |
+| Prediction | A possible output selected by the model |
+| Training | Adjusting internal numbers using examples |
+| Token | A numbered piece of text |
+
+Every later term will be built from ideas like these.
+
+## Quick check
+
+1. What is the difference between training and inference?
+2. Is a token always a word?
+3. What changes when a model learns from an example?
+
+<details><summary>Answers</summary>
+
+1. Training changes the model's adjustable numbers; inference uses the learned numbers without changing them.
+2. No. A token can be a word, part of a word, punctuation, a byte, or another text unit chosen by the tokenizer.
+3. Some of its adjustable internal numbers—its parameters—change a little.
+
+</details>
+
+## The recommended first session
+
+Follow these in order:
+
+1. [Before the jargon](01-foundations/00-before-the-jargon.md) — practice the core ideas with no assumed background.
+2. [What an LLM is](01-foundations/01-what-is-an-llm.md) — connect those ideas to a language model.
+3. [Learning from examples](01-foundations/02-learning-from-data.md) — see how repeated correction becomes training.
+4. [Text becomes tokens](02-tokenization/01-text-becomes-tokens.md) — understand the text-to-number bridge.
+5. [Tokenizer lab](labs/01-tokenizer.md) — run the first small implementation.
+
+Then continue through the [canonical zero-to-expert curriculum](learning-paths.md#the-canonical-zero-to-expert-course).
+
+!!! tip "You never need to guess what a symbol means"
+    The mathematics chapters name every symbol and show its shape. Skip a formal section on the first pass if needed; the surrounding explanation will tell you when to return.

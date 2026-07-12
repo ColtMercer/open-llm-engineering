@@ -12,6 +12,8 @@ Open LLM Engineering values corrections and reproducible explanations more than 
 6. Never present a dataset as risk-free. Record its license or terms, provenance limits, sensitive-content risks, and takedown mechanism where published.
 7. Every new Mermaid block must render, and every Python change needs a focused test.
 
+For beginner-facing material, follow the [teaching standard](docs/about/teaching-standard.md): concrete example before formal name, definition at first use, one new abstraction at a time, and optional notation only after the mechanism is understandable.
+
 ## Local workflow
 
 ```bash
@@ -37,6 +39,8 @@ A substantial chapter should contain:
 - failure modes and limits;
 - a checkpoint and exercises;
 - primary references near the claims they support.
+
+For a foundation chapter, also include a first-use terminology audit. A glossary link does not replace an inline explanation.
 
 ## Content corrections
 

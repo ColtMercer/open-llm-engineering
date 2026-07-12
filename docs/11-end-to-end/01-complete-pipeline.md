@@ -4,6 +4,11 @@
 
 An LLM release is the output of a versioned supply chain. You should be able to point from a generated token back to the serving configuration, checkpoint, training run, batch, tokenized record, processed document, and source policy that made it possible.
 
+<figure markdown>
+  ![An end-to-end LLM lifecycle: source documents become token streams, pass through Transformer layers and routed experts, then become a checkpoint served inside a guarded application.](../assets/images/llm-lifecycle.png){ loading=lazy }
+  <figcaption>An advanced visual summary. The diagram below separates the lifecycle into the exact stages and contracts used throughout this chapter.</figcaption>
+</figure>
+
 ## The lifecycle at one glance
 
 ```mermaid
@@ -154,4 +159,3 @@ For each symptom, name at least three possible stages:
 - the same checkpoint behaves differently in two deployments.
 
 The point is not to guess. It is to instrument the boundaries so the responsible stage can be identified.
-
