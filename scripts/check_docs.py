@@ -12,6 +12,31 @@ DOCS = ROOT / "docs"
 MARKDOWN_LINK = re.compile(r"!?\[[^\]]*\]\(([^)]+)\)")
 NAV_TARGET = re.compile(r":\s+([^\s#]+\.md)\s*$")
 WEB_SCHEMES = ("http://", "https://", "mailto:", "chatgpt-conversation://")
+BEGINNER_GUARDRAILS = {
+    "index.md": (
+        "jump to mixture",
+        "](05-moe/",
+        "sparse feed-forward",
+        "backpropagation",
+        "kv cache",
+    ),
+    "start-here.md": (
+        "logits",
+        "softmax",
+        "backpropagation",
+        "causal mask",
+        "kv cache",
+        "sparse feed-forward",
+    ),
+    "01-foundations/00-before-the-jargon.md": (
+        "logits",
+        "softmax",
+        "backpropagation",
+        "causal mask",
+        "kv cache",
+        "sparse feed-forward",
+    ),
+}
 
 
 def nav_targets() -> list[Path]:
@@ -40,6 +65,19 @@ def main() -> int:
     for target in nav_targets():
         if not target.is_file():
             errors.append(f"mkdocs nav target does not exist: {target.relative_to(ROOT)}")
+
+    home = (DOCS / "index.md").read_text().lower()
+    if "[begin with lesson 0](01-foundations/00-before-the-jargon.md)" not in home:
+        errors.append("homepage must make lesson 0 the primary starting action")
+
+    for relative_path, banned_phrases in BEGINNER_GUARDRAILS.items():
+        beginner_text = (DOCS / relative_path).read_text().lower()
+        for phrase in banned_phrases:
+            if phrase in beginner_text:
+                errors.append(
+                    f"advanced term or personalized shortcut in beginner path: "
+                    f"{relative_path}: {phrase}"
+                )
 
     for source in markdown_files:
         text = source.read_text()

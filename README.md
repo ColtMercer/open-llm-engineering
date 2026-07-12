@@ -1,44 +1,39 @@
 # Open LLM Engineering
 
-**A source-backed, executable guide to how language models are built—from raw documents to routed experts to production inference.**
+**A prerequisite-free, source-backed, executable guide to how language models work—from the first next-word guess to training and production systems.**
 
 [![Docs](https://img.shields.io/badge/read-the_book-6557ff)](https://coltmercer.github.io/open-llm-engineering/)
 [![Quality](https://github.com/ColtMercer/open-llm-engineering/actions/workflows/quality.yml/badge.svg)](https://github.com/ColtMercer/open-llm-engineering/actions/workflows/quality.yml)
 [![Deploy docs](https://github.com/ColtMercer/open-llm-engineering/actions/workflows/docs.yml/badge.svg)](https://github.com/ColtMercer/open-llm-engineering/actions/workflows/docs.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-18a999)](LICENSE)
 
-![An end-to-end LLM lifecycle from source documents through tokens, Transformer layers, routed experts, checkpoint serving, and a guarded application.](docs/assets/images/llm-lifecycle.png)
-
-Most explanations of LLMs stop at a block diagram. This book connects each box to the data record, equation, tensor shape, training loop, distributed-system primitive, source file, and operational trade-off behind it.
+Most explanations of LLMs either stay at the analogy level or begin halfway up the technical ladder. This book starts with ordinary language, defines every concept before relying on it, and eventually connects each idea to the data record, equation, tensor shape, training loop, source file, and production trade-off behind it.
 
 ```mermaid
 flowchart LR
-    A[Raw sources] --> B[Filter and deduplicate]
-    B --> C[Tokenizer]
-    C --> D[Pretraining]
-    D --> E[Post-training]
-    E --> F[Evaluation]
-    F --> G[Serving]
-    G --> H[Prompts and tools]
-    D -. sparse layer .-> M{MoE router}
-    M --> X1[Expert 1]
-    M --> X2[Expert 2]
+    A[Show examples] --> B[Let the model predict]
+    B --> C[Compare with the answer]
+    C --> D[Adjust internal numbers]
+    D --> E[Repeat]
+    E --> F[Use the trained model]
 ```
 
 ## What makes this different
 
-- **Three depths at once.** Start with intuition, then inspect the math, then follow the implementation.
+- **A real zero-to-expert sequence.** Concrete example first, plain-language idea second, technical name third, and mathematics or code only after the mechanism is clear.
+- **Three depths without prerequisite jumps.** Start with intuition, then inspect the math, then follow the implementation.
 - **Primary sources first.** Claims link to original papers, official dataset cards, model reports, and source repositories.
-- **Executable concepts.** The `open_llm_lab` package contains a small tokenizer, causal attention, a decoder-only Transformer, and a sparse MoE layer with tests.
+- **Executable concepts.** The `open_llm_lab` package contains small, tested programs for turning text into pieces, letting earlier text affect later predictions, training a model, and exploring an advanced routed design.
 - **Honest boundaries.** “Open weights,” “open code,” “open data,” and reproducible training are kept distinct. Published facts are separated from inference and advice.
-- **Systems, not magic.** Data governance, distributed training, load balancing, KV caches, batching, quantization, evaluation, safety, prompting, and agents live in one end-to-end map.
+- **Systems, not magic.** After the foundations, the course reaches data governance, multi-computer training, fast generation, evaluation, safety, prompting, tools, and agents in one end-to-end map.
 
 ## Start here
 
 1. Read the [Start Here](docs/start-here.md) page.
-2. Pick a [learning path](docs/learning-paths.md).
-3. Set up the [labs](docs/labs/setup.md).
-4. Use the [dataset atlas](docs/reference/datasets.md) and [source-code map](docs/reference/code-map.md) while reading.
+2. Complete [Lesson 0: Before the jargon](docs/01-foundations/00-before-the-jargon.md).
+3. Follow the [canonical curriculum](docs/learning-paths.md#the-canonical-zero-to-expert-course).
+4. Set up the [labs](docs/labs/setup.md) when the course first calls for one.
+5. Use the [concept ladder](docs/reference/concept-ladder.md), [dataset atlas](docs/reference/datasets.md), and [source-code map](docs/reference/code-map.md) as references.
 
 ## Run the labs
 
@@ -59,7 +54,7 @@ uv sync --extra dev --extra docs
 uv run pytest
 ```
 
-The labs intentionally use tiny tensors and text samples. They teach mechanics; they are not recipes for training a competitive model or a substitute for a data, security, or safety review.
+The labs intentionally use small collections of numbers and tiny text samples. They teach mechanics; they are not recipes for training a competitive model or a substitute for a data, security, or safety review.
 
 ## Repository map
 

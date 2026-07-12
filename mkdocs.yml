@@ -85,10 +85,11 @@ nav:
   - Home: index.md
   - Start here:
       - Orientation: start-here.md
-      - Learning paths: learning-paths.md
-      - How to read the math: 01-foundations/03-math-with-shapes.md
+      - Lesson 0 - Before the jargon: 01-foundations/00-before-the-jargon.md
+      - Canonical curriculum: learning-paths.md
       - Lab setup: labs/setup.md
   - 1. Foundations:
+      - Before the jargon: 01-foundations/00-before-the-jargon.md
       - What an LLM is: 01-foundations/01-what-is-an-llm.md
       - Learning from examples: 01-foundations/02-learning-from-data.md
       - Math with shapes: 01-foundations/03-math-with-shapes.md
@@ -110,7 +111,12 @@ nav:
       - Attention from scratch: 04-transformer/03-attention-from-scratch.md
       - Transformer block: 04-transformer/04-the-transformer-block.md
       - Modern variants: 04-transformer/05-modern-block-variants.md
-  - 5. Mixture of experts:
+  - 5. Pretraining:
+      - Objective: 06-training/01-pretraining-objective.md
+      - Optimization and scaling: 06-training/02-optimization-and-scaling.md
+      - Distributed training: 06-training/03-distributed-training.md
+      - Evaluation and checkpoints: 06-training/04-evaluation-and-checkpoints.md
+  - 6. Mixture of experts:
       - Why sparse models: 05-moe/01-why-sparse-models.md
       - Router math: 05-moe/02-router-math.md
       - Capacity and balance: 05-moe/03-capacity-load-balancing.md
@@ -118,11 +124,6 @@ nav:
       - Real architectures: 05-moe/05-real-architectures.md
       - Prompting and experts: 05-moe/06-prompting-and-experts.md
       - Build a tiny MoE: 05-moe/07-build-a-tiny-moe.md
-  - 6. Pretraining:
-      - Objective: 06-training/01-pretraining-objective.md
-      - Optimization and scaling: 06-training/02-optimization-and-scaling.md
-      - Distributed training: 06-training/03-distributed-training.md
-      - Evaluation and checkpoints: 06-training/04-evaluation-and-checkpoints.md
   - 7. Post-training:
       - Supervised tuning: 07-post-training/01-sft-and-instruction-tuning.md
       - Preference optimization: 07-post-training/02-preference-optimization.md
@@ -156,6 +157,7 @@ nav:
       - Tiny MoE: labs/04-tiny-moe.md
       - Generation: labs/05-generation.md
   - Reference:
+      - Concept ladder: reference/concept-ladder.md
       - Dataset catalog: reference/datasets.md
       - Open projects: reference/open-projects.md
       - Source-code map: reference/code-map.md
@@ -165,5 +167,6 @@ nav:
       - Myth detector: reference/myth-detector.md
   - About:
       - Research methodology: about/methodology.md
+      - Teaching standard: about/teaching-standard.md
       - Visual provenance: assets/images/README.md
       - Roadmap: about/roadmap.md

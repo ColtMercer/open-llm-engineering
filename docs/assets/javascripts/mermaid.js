@@ -8,10 +8,12 @@ document$.subscribe(async () => {
       replacement.textContent = code.textContent;
       diagram.replaceWith(replacement);
       diagrams.push(replacement);
-    } else {
+    } else if (diagram.dataset.processed !== "true" && !diagram.querySelector(":scope > svg")) {
       diagrams.push(diagram);
     }
   }
+  if (diagrams.length === 0) return;
+
   mermaid.initialize({
     startOnLoad: false,
     theme: document.body.getAttribute("data-md-color-scheme") === "slate" ? "dark" : "neutral",

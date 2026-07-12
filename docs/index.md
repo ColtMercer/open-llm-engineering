@@ -2,116 +2,115 @@
 
 # Open LLM Engineering
 
-## From a line of text to a distributed learning system
+## Learn how language models work, one idea at a time
 
-Language models are not mysterious boxes. They are data pipelines, numerical functions, optimization runs, and serving systems assembled at unusual scale. This book lets you follow every important transformation—and run the small version yourself.
+No machine-learning background is required. Begin with a familiar guessing game, then build—carefully and in order—toward the real examples, source code, mathematics, many-computer learning systems, and production engineering behind modern language models.
 
-[Start from zero](start-here.md){ .md-button .md-button--primary }
-[Jump to mixture of experts](05-moe/01-why-sparse-models.md){ .md-button }
+[Begin with lesson 0](01-foundations/00-before-the-jargon.md){ .md-button .md-button--primary }
+[See the full curriculum](learning-paths.md){ .md-button }
 
 </div>
 
-<figure markdown>
-  ![An end-to-end LLM lifecycle: source documents become token streams, pass through Transformer layers and routed experts, then become a checkpoint served inside a guarded application.](assets/images/llm-lifecycle.png){ loading=lazy }
-  <figcaption>Original generated illustration. The diagrams and chapters below provide the precise contracts behind each visual stage.</figcaption>
-</figure>
+## Start with one ordinary question
 
-## One system, seven views
+Complete this sentence:
+
+> The cat sat on the ___
+
+You might think of `mat`, `floor`, or `chair`. You can do that because you have seen language before and learned which words tend to fit together.
+
+A **language model** is a computer program trained to do a related job. Given some text, it assigns each possible continuation a score. A higher score means “this continuation looks more likely based on the examples I learned from.” The model then selects one continuation and repeats the process.
+
+That one loop is the starting point for everything in this library.
+
+!!! note "Illustration, not a measurement"
+    If this page shows one ending as more likely than another, it is explaining the idea. It is not reporting output from a named model.
+
+## How the program learns
+
+Before training, its guesses are poor. Training repeats a simple cycle over many examples:
+
+```mermaid
+flowchart LR
+    Examples[Show an example] --> Hide[Hide what comes next]
+    Hide --> Guess[Let the program guess]
+    Guess --> Compare[Compare guess with answer]
+    Compare --> Adjust[Adjust its internal numbers]
+    Adjust --> More{More examples?}
+    More -- yes --> Examples
+    More -- no --> Ready[Use the trained model]
+```
+
+The **internal numbers** are settings the program can change while learning. Later you will learn their technical name—*parameters*—and see exactly how they are adjusted. For now, the important idea is simply:
+
+> examples → guess → compare → adjust → repeat
+
+## The path from zero to expert
+
+The course follows one canonical order. Each stage depends only on ideas taught earlier.
+
+| Stage | The plain-language question |
+|---:|---|
+| 0 | What are a model, an example, a prediction, and training? |
+| 1 | How does a computer turn text into manageable pieces? |
+| 2 | How can adjustable numbers capture patterns from examples? |
+| 3 | How can each text piece use information from earlier pieces? |
+| 4 | How are those operations assembled into a complete language model? |
+| 5 | How can the same basic model be trained across many computers? |
+| 6 | How is a general text predictor taught to follow instructions? |
+| 7 | How is a trained model made fast, measurable, and safe enough to use? |
+| 8 | How do retrieval, tools, and agent loops turn a model into a larger system? |
+
+[Follow the canonical curriculum](learning-paths.md#the-canonical-zero-to-expert-course){ .md-button }
+
+Advanced designs that send different text pieces through different internal paths appear only after the standard, same-path model has been explained.
+
+## Technical names you will earn along the way
+
+The library uses precise terms, but never as a substitute for explanation:
 
 <div class="signal" markdown>
 
-<div markdown>**Data**  
-What was collected, filtered, removed, mixed, and licensed?</div>
+<div markdown>**Training data**<br>
+The examples used for learning.</div>
 
-<div markdown>**Representation**  
-How do bytes become token IDs and learned vectors?</div>
+<div markdown>**Tokens**<br>
+The numbered text pieces a model processes.</div>
 
-<div markdown>**Architecture**  
-How do attention, MLPs, residual paths, and routed experts transform those vectors?</div>
+<div markdown>**Parameters**<br>
+The adjustable internal numbers changed during training.</div>
 
-<div markdown>**Learning**  
-Which loss is minimized, by which optimizer, across which devices?</div>
+<div markdown>**Transformer**<br>
+A model design that lets text positions exchange useful information.</div>
 
-<div markdown>**Behavior**  
-How do instruction tuning, preferences, verifiers, and evaluations change outputs?</div>
+<div markdown>**Inference**<br>
+Using a trained model without changing its learned numbers.</div>
 
-<div markdown>**Inference**  
-How do caches, batching, quantization, and sampling turn a checkpoint into a service?</div>
-
-<div markdown>**Interface**  
-How do prompts, retrieval, tools, memory, and agent loops constrain a probabilistic model?</div>
+<div markdown>**Evaluation**<br>
+Testing what the complete system does well and where it fails.</div>
 
 </div>
 
-```mermaid
-flowchart TB
-    subgraph Build[Build the training signal]
-      S[Sources] --> F[Filter and deduplicate]
-      F --> M[Mix and sample]
-      M --> T[Tokenize]
-    end
-    subgraph Learn[Fit parameters]
-      T --> B[Token batches]
-      B --> L[Predict next token]
-      L --> O[Backpropagate and optimize]
-      O --> C[Checkpoint]
-      O --> L
-    end
-    subgraph Shape[Shape useful behavior]
-      C --> I[Instruction tuning]
-      I --> P[Preference or reward learning]
-      P --> E[Capability and safety evaluation]
-    end
-    subgraph Serve[Serve and operate]
-      E --> Q[Quantize or shard]
-      Q --> V[Inference server]
-      V --> A[Applications and agents]
-      A --> R[Observations and evals]
-    end
-```
-
-## The 90-second mental model
-
-At training time, an autoregressive language model receives a sequence such as `the sky is`. The tokenizer converts it to integers. The model maps those integers to vectors, repeatedly mixes information across earlier positions with causal self-attention, transforms each position with dense or sparse feed-forward networks, and produces one score per vocabulary item. Cross-entropy makes the score for the observed next token—perhaps `blue`—more likely. Repeating that update over vast, curated corpora creates a statistical model of sequences.
-
-At inference time, the weights are fixed. The model predicts a distribution for the next token, a decoding rule selects one token, that token joins the context, and the cycle repeats. A chat product adds templates, tools, retrieval, policy, state, and serving infrastructure around that loop.
-
-That summary is accurate but incomplete. Every noun in it hides engineering decisions. The rest of this book opens them.
+You do not need to memorize that list. Each term is reintroduced with a worked example in the chapter where it becomes useful.
 
 ## What “open” means here
 
-This project uses a **component ledger**, not a single open/closed label:
+“Open model” can hide several different questions. This library keeps the pieces separate:
 
-| Component | Question to ask |
+| Part | Plain-language question |
 |---|---|
-| Weights | Can you download and modify the learned parameters, and under what license? |
-| Architecture | Is the exact network configuration and model implementation available? |
-| Training code | Can you reconstruct the optimization and distributed execution path? |
-| Data | Are the corpus, source inventory, processing code, and mixture documented or available? |
-| Checkpoints | Are intermediate states available for studying learning dynamics? |
-| Logs and evals | Are loss curves, configuration, metrics, and evaluation code published? |
+| Learned numbers (*weights*) | Can people download, inspect, modify, and share what the model learned? |
+| Blueprint (*architecture*) | Can people see the operations that turn input into output? |
+| Training recipe (*code and configuration*) | Can people see how learning was run? |
+| Training examples (*data*) | Can people inspect or reconstruct what the model learned from? |
+| Progress snapshots (*checkpoints and logs*) | Can people study what changed during the training run? |
+| Tests (*evaluations*) | Can people reproduce the reported measurements? |
 
-The [Open Source AI Definition 1.0](https://opensource.org/ai/open-source-ai-definition) sets a stronger standard than “downloadable weights”: the freedoms to use, study, modify, and share require access to the preferred form for making modifications, including sufficient data information, code, and parameters. Individual licenses and dataset terms still control actual use.
+The [Open Source AI Definition 1.0](https://opensource.org/ai/open-source-ai-definition) provides one formal definition. Individual code, model, and dataset licenses still determine what a person may actually do with each artifact.
 
-!!! warning "Readable is not automatically reproducible"
-    A model class in an inference library can explain the forward pass without revealing the corpus, data order, optimizer state, cluster topology, or post-training procedure that produced a particular checkpoint.
+## Learn by running the small version
 
-## A book you can execute
+The companion labs use tiny examples that run on a laptop. You will train a text-piece builder, inspect how earlier words affect later ones, fit a small language model, observe an advanced routing layer, and compare generation choices. The examples are small enough to read line by line and are tested automatically.
 
-The companion package deliberately keeps scale tiny while preserving the contracts that matter:
-
-```python
-from open_llm_lab.model import TinyGPT, TinyGPTConfig
-
-model = TinyGPT(TinyGPTConfig(vocab_size=256, d_model=64, n_heads=4, n_layers=2))
-```
-
-You can inspect causal attention, watch a router assign tokens to experts, train on a small local string, and test generation deterministically. Each lab points back to production codebases so you can compare the teaching implementation with real systems.
-
-## Choose your route
-
-- **New to machine learning:** [Foundations → tokens → attention](learning-paths.md#the-builder-from-zero)
-- **Software engineer:** [Code-first route](learning-paths.md#the-code-first-engineer)
-- **ML practitioner:** [Data, scaling, MoE, and serving](learning-paths.md#the-ml-practitioner)
-- **Decision maker:** [System map, openness, risk, and cost](learning-paths.md#the-technical-leader)
-- **Research reader:** [Equations, papers, source trails, and replication](learning-paths.md#the-research-track)
+[Read the orientation](start-here.md){ .md-button .md-button--primary }
+[Set up the labs](labs/setup.md){ .md-button }
