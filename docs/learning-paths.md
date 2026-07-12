@@ -4,6 +4,9 @@ This library has one main route. It does not assume that you already know machin
 
 In this book, a **language model** is a program that learns patterns from examples of text. If that sentence makes sense, you are ready to begin. The first lesson introduces every other essential term with ordinary examples before later chapters use it.
 
+!!! tip "First visit?"
+    Read the [Introduction](start-here.md) first. It explains the library's goal, teaching method, model case studies, dataset coverage, labs, and boundaries before the lessons begin.
+
 ## The one path through the library
 
 Follow these stages in order on your first pass. Each stage builds on the one before it.

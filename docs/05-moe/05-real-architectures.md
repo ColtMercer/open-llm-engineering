@@ -264,7 +264,7 @@ weight normalization, and weighted accumulation
 This is an independent library implementation, not proof of Databricks'
 pretraining code.
 
-## OLMoE: a fully open dropless study
+## OLMoE: a comprehensively published dropless study
 
 OLMoE-1B-7B reports
 ([paper](https://arxiv.org/abs/2409.02060)):

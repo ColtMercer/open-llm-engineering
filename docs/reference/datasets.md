@@ -142,7 +142,7 @@ stack_ids = load_dataset(
 
 Never turn a metadata probe into an unbounded `list(dataset)` call.
 
-## End-to-end open model projects
+## Projects with substantial end-to-end artifact trails
 
 | Project | Data | Training/data code | Intermediate artifacts | Evaluation/logs | Key caveat |
 |---|---|---|---|---|---|

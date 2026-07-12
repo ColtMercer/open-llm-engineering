@@ -84,12 +84,11 @@ extra_javascript:
 nav:
   - Home: index.md
   - Start here:
-      - Orientation: start-here.md
-      - Lesson 0 - Before the jargon: 01-foundations/00-before-the-jargon.md
-      - Canonical curriculum: learning-paths.md
+      - Introduction - Goal and scope: start-here.md
+      - Course map: learning-paths.md
       - Lab setup: labs/setup.md
   - 1. Foundations:
-      - Before the jargon: 01-foundations/00-before-the-jargon.md
+      - Lesson 0 - Before the jargon: 01-foundations/00-before-the-jargon.md
       - What an LLM is: 01-foundations/01-what-is-an-llm.md
       - Learning from examples: 01-foundations/02-learning-from-data.md
       - Math with shapes: 01-foundations/03-math-with-shapes.md

@@ -2,100 +2,84 @@
 
 # Open LLM Engineering
 
-## Learn how language models work, one idea at a time
+## A complete, inspectable path from first principles to real systems
 
-No machine-learning background is required. Begin with a familiar guessing game, then build—carefully and in order—toward the real examples, source code, mathematics, many-computer learning systems, and production engineering behind modern language models.
+Open LLM Engineering is a prerequisite-free course and reference library about how language models are built, trained, evaluated, and used. It connects beginner explanations to real datasets, research papers, model implementations, training systems, and executable labs.
 
-[Begin with lesson 0](01-foundations/00-before-the-jargon.md){ .md-button .md-button--primary }
-[See the full curriculum](learning-paths.md){ .md-button }
+[Read the introduction](start-here.md){ .md-button .md-button--primary }
+[Browse the curriculum](learning-paths.md){ .md-button }
 
 </div>
 
-## Start with one ordinary question
+## What this library is
 
-Complete this sentence:
+This is an open learning library, not a guide written around one reader or one model design. Its goal is to help anyone progress from “I do not know the terminology” to being able to inspect a model release, trace how it was produced, read the relevant source code, run small versions of the mechanisms, and design a responsible project of their own.
 
-> The cat sat on the ___
+The [Introduction](start-here.md) explains the destination before Lesson 0 begins: what you will learn, how the course teaches it, which model projects and datasets it reviews, what the labs build, and what the library does not claim.
 
-You might think of `mat`, `floor`, or `chair`. You can do that because you have seen language before and learned which words tend to fit together.
+## What you will learn
 
-A **language model** is a computer program trained to do a related job. Given some text, it assigns each possible continuation a score. A higher score means “this continuation looks more likely based on the examples I learned from.” The model then selects one continuation and repeats the process.
+By following the complete path, you will learn to:
 
-That one loop is the starting point for everything in this library.
+- trace ordinary text through data preparation, numbered text pieces, a language model, training, evaluation, and a running application;
+- explain the standard Transformer design before comparing alternative designs;
+- read a compact teaching implementation and find the same mechanism in production source code;
+- distinguish downloadable model weights from open code, inspectable data, training records, and a reproducible release;
+- examine dataset records, filtering choices, provenance, access terms, and known limitations;
+- understand pretraining, instruction tuning, reasoning-oriented training, generation, serving, prompting, retrieval, tools, and agents;
+- design and evaluate a small end-to-end language-model project without treating any part as magic.
 
-!!! note "Illustration, not a measurement"
-    If this page shows one ending as more likely than another, it is explaining the idea. It is not reporting output from a named model.
+You are not expected to understand those terms yet. Each one is introduced from an ordinary example before the course relies on it.
 
-## How the program learns
+## What you will study
 
-Before training, its guesses are poor. Training repeats a simple cycle over many examples:
+The library uses named projects as evidence, not as brands to memorize.
+
+| Evidence in the library | Examples reviewed | What the examples teach |
+|---|---|---|
+| Model projects with substantial training records | OLMo 2, OLMo 3, OLMoE, Pythia, BLOOM, LLM360 Amber | How data, code, configurations, checkpoints, logs, and evaluations fit together—and where the record is still incomplete |
+| Architecture and training case studies | Llama 3, Mixtral, DeepSeek-V3 and R1, Qwen, DBRX, Switch Transformer | How particular model components or training methods are described in released papers, configurations, weights, or source code |
+| Training datasets | Common Crawl, C4, RefinedWeb, FineWeb, FineWeb-Edu, Dolma, RedPajama, SlimPajama, The Pile, ROOTS, CulturaX, The Stack v2 | How raw web, filtered text, multilingual material, mixed-domain collections, and source code become documented training inputs |
+| Open-source implementations | nanoGPT, LitGPT, Hugging Face Transformers, OLMo-core, TorchTitan, Megatron-LM, TRL, vLLM, llama.cpp | How the same ideas appear in educational code, distributed training, post-training, and production serving |
+| Executable companion labs | Tokenizer, attention, tiny GPT, routing layer, generation | How to run the small, readable version before inspecting a large implementation |
+
+These releases do not all provide the same freedoms or artifacts. The course labels each case according to what is actually published instead of calling every downloadable model “open source.” See the [open-project atlas](reference/open-projects.md), [dataset reference](reference/datasets.md), and [source-code map](reference/code-map.md) for the complete evidence trails.
+
+## How you will learn
+
+Every major concept follows the same progression:
 
 ```mermaid
 flowchart LR
-    Examples[Show an example] --> Hide[Hide what comes next]
-    Hide --> Guess[Let the program guess]
-    Guess --> Compare[Compare guess with answer]
-    Compare --> Adjust[Adjust its internal numbers]
-    Adjust --> More{More examples?}
-    More -- yes --> Examples
-    More -- no --> Ready[Use the trained model]
+    A[Begin with a concrete example] --> B[Explain the idea in ordinary language]
+    B --> C[Introduce its technical name]
+    C --> D[Trace the math or data step]
+    D --> E[Run a small implementation]
+    E --> F[Inspect real source and evidence]
+    F --> G[Check understanding and limits]
 ```
 
-The **internal numbers** are settings the program can change while learning. Later you will learn their technical name—*parameters*—and see exactly how they are adjusted. For now, the important idea is simply:
+The mathematics is introduced only when it explains something you have already seen. The labs use tiny, project-written examples that run on a laptop. The dataset chapters show bounded record samples and published schemas; they do not silently download giant corpora. Source claims lead to original papers, official cards, configurations, logs, or repositories.
 
-> examples → guess → compare → adjust → repeat
+## The course journey
 
-## The path from zero to expert
+The detailed curriculum contains twelve ordered stages. At a high level, the journey is:
 
-The course follows one canonical order. Each stage depends only on ideas taught earlier.
+| Phase | Question answered |
+|---|---|
+| Introduction | What is this library, what will I learn, and what real evidence will I inspect? |
+| Foundations | What are models, examples, predictions, training, numbers, and program operations? |
+| Text and data | How does text become model input, and how are training collections built and governed? |
+| The core model | How does a standard Transformer use earlier text to predict what comes next? |
+| Training and alternatives | How is the model trained and measured, and how do alternative architectures change the computation? |
+| Behavior and serving | How is a general predictor taught useful behavior and made efficient enough to run? |
+| Complete systems | How do prompting, retrieval, tools, agents, safety, and release engineering fit around the model? |
 
-| Stage | The plain-language question |
-|---:|---|
-| 0 | What are a model, an example, a prediction, and training? |
-| 1 | How does a computer turn text into manageable pieces? |
-| 2 | How can adjustable numbers capture patterns from examples? |
-| 3 | How can each text piece use information from earlier pieces? |
-| 4 | How are those operations assembled into a complete language model? |
-| 5 | How can the same basic model be trained across many computers? |
-| 6 | How is a general text predictor taught to follow instructions? |
-| 7 | How is a trained model made fast, measurable, and safe enough to use? |
-| 8 | How do retrieval, tools, and agent loops turn a model into a larger system? |
-
-[Follow the canonical curriculum](learning-paths.md#the-canonical-zero-to-expert-course){ .md-button }
-
-Advanced designs that send different text pieces through different internal paths appear only after the standard, same-path model has been explained.
-
-## Technical names you will earn along the way
-
-The library uses precise terms, but never as a substitute for explanation:
-
-<div class="signal" markdown>
-
-<div markdown>**Training data**<br>
-The examples used for learning.</div>
-
-<div markdown>**Tokens**<br>
-The numbered text pieces a model processes.</div>
-
-<div markdown>**Parameters**<br>
-The adjustable internal numbers changed during training.</div>
-
-<div markdown>**Transformer**<br>
-A model design that lets text positions exchange useful information.</div>
-
-<div markdown>**Inference**<br>
-Using a trained model without changing its learned numbers.</div>
-
-<div markdown>**Evaluation**<br>
-Testing what the complete system does well and where it fails.</div>
-
-</div>
-
-You do not need to memorize that list. Each term is reintroduced with a worked example in the chapter where it becomes useful.
+[See the canonical zero-to-expert curriculum](learning-paths.md#the-canonical-zero-to-expert-course){ .md-button }
 
 ## What “open” means here
 
-“Open model” can hide several different questions. This library keeps the pieces separate:
+“Open model” can hide several different questions. This library keeps them separate:
 
 | Part | Plain-language question |
 |---|---|
@@ -106,11 +90,9 @@ You do not need to memorize that list. Each term is reintroduced with a worked e
 | Progress snapshots (*checkpoints and logs*) | Can people study what changed during the training run? |
 | Tests (*evaluations*) | Can people reproduce the reported measurements? |
 
-The [Open Source AI Definition 1.0](https://opensource.org/ai/open-source-ai-definition) provides one formal definition. Individual code, model, and dataset licenses still determine what a person may actually do with each artifact.
+The [Open Source AI Definition 1.0](https://opensource.org/ai/open-source-ai-definition) provides one formal definition. Individual software, model, and dataset licenses still determine what a person may do with each artifact.
 
-## Learn by running the small version
+## Begin in order
 
-The companion labs use tiny examples that run on a laptop. You will train a text-piece builder, inspect how earlier words affect later ones, fit a small language model, observe an advanced routing layer, and compare generation choices. The examples are small enough to read line by line and are tested automatically.
-
-[Read the orientation](start-here.md){ .md-button .md-button--primary }
-[Set up the labs](labs/setup.md){ .md-button }
+[Read the introduction](start-here.md){ .md-button .md-button--primary }
+[Then begin Lesson 0](01-foundations/00-before-the-jargon.md){ .md-button }
